@@ -1,0 +1,38 @@
+[env]
+
+[tasks.build]
+description = "Build with wasm-pack"
+workspace = false
+install_crate = { crate_name = "wasm-pack", binary = "wasm-pack", test_arg = "-V" }
+command = "wasm-pack"
+args = ["build", "--target", "web", "--out-name", "package", "--dev"]
+
+[tasks.build_release]
+extend = "default_build"
+description = "Build with wasm-pack in release mode"
+args = ["build", "--target", "web", "--out-name", "package", "--release"]
+
+[tasks.start]
+description = "Build and start microserver"
+workspace = false
+install_crate = { crate_name = "microserver", binary = "microserver", test_arg = "-h" }
+command = "microserver"
+args = ["--port", "8000"]
+dependencies = ["build"]
+
+[tasks.start_release]
+extend = "default_start"
+description = "Build and start microserver in release mode"
+dependencies = ["build_release"]
+
+[tasks.clippy]
+description = "Lint with Clippy"
+workspace = false
+install_crate = { rustup_component_name = "clippy", binary = "cargo-clippy", test_arg = "--help" }
+command = "cargo"
+args = ["clippy", "--all-features", "--",
+    "--deny", "warnings",
+    "--deny", "clippy::pedantic",
+    "--deny", "clippy::nursery",
+    "--allow", "clippy::wildcard_imports" # for `use seed::{prelude::*, *};`
+]

@@ -1,0 +1,11 @@
+[package]
+name = "wasm-seed"
+version = "0.1.0"
+authors = ["Aleksei Trifonov <avrong@avrong.me>"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+seed = "0.7.0"
