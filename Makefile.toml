@@ -8,7 +8,7 @@ command = "wasm-pack"
 args = ["build", "--target", "web", "--out-name", "package", "--dev"]
 
 [tasks.build_release]
-extend = "default_build"
+extend = "build"
 description = "Build with wasm-pack in release mode"
 args = ["build", "--target", "web", "--out-name", "package", "--release"]
 
@@ -21,7 +21,7 @@ args = ["--port", "8000"]
 dependencies = ["build"]
 
 [tasks.start_release]
-extend = "default_start"
+extend = "start"
 description = "Build and start microserver in release mode"
 dependencies = ["build_release"]
 
